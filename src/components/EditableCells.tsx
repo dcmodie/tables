@@ -4,12 +4,24 @@ import { ThemeProvider, createTheme } from '@mui/material';
 import { useFetchEmployees } from '../hooks/useFetchEmployees';
 import { updateEmployees } from '../api/employees';
 import Button from '@mui/material/Button';
+import { tableIcons } from '../icons/material-table-icons';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer, toast } from 'react-toastify';
+import {
+  diff,
+  addedDiff,
+  deletedDiff,
+  updatedDiff,
+  detailedDiff,
+} from 'deep-object-diff';
 
 function EditableCells() {
   //const { useState } = React;
   const { data: empDataDb } = useFetchEmployees();
 
   const [localData, setLocalData] = useState(empDataDb?.data);
+  const [disableSave, setDisableSave] = useState(true);
+  const notify = () => toast('Wow so easy!');
 
   const [columns, setColumns] = useState([
     { title: 'Name', field: 'name' },
@@ -24,8 +36,8 @@ function EditableCells() {
   useEffect(() => {
     setLocalData(empDataDb?.data);
   }, [empDataDb]);
-  console.log('empDataDb?.data: ', empDataDb?.data);
-  console.log('local cata ', localData);
+  // console.log('empDataDb?.data: ', empDataDb?.data);
+  // console.log('local cata ', localData);
 
   const defaultMaterialTheme = createTheme();
 
@@ -33,6 +45,7 @@ function EditableCells() {
     <>
       <ThemeProvider theme={defaultMaterialTheme}>
         <MaterialTable
+          icons={tableIcons}
           title="Custom Edit Component Preview"
           columns={columns}
           data={localData}
@@ -45,9 +58,13 @@ function EditableCells() {
                   resolve();
                 }, 1000);
               }),
-            onRowUpdate: (newData, oldData) =>
-              new Promise((resolve, reject) => {
+            onRowUpdate: (newData, oldData) => {
+              return new Promise((resolve, reject) => {
                 setTimeout(() => {
+                  if (Object.keys(updatedDiff(oldData, newData)).length > 0) {
+                    setDisableSave(false);
+                  }
+
                   const dataUpdate = [...localData];
                   const index = oldData.tableData.id;
                   dataUpdate[index] = newData;
@@ -55,7 +72,8 @@ function EditableCells() {
 
                   resolve();
                 }, 1000);
-              }),
+              });
+            },
             onRowDelete: (oldData) =>
               new Promise((resolve, reject) => {
                 setTimeout(() => {
@@ -73,7 +91,9 @@ function EditableCells() {
       <div className="flex justify-end">
         <Button
           variant="contained"
+          disabled={disableSave}
           onClick={() => {
+            toast('asfd');
             updateEmployees(localData);
           }}
         >
@@ -88,3 +108,7 @@ export default EditableCells;
 // const index = oldData.tableData.id;
 // dataUpdate[index] = newData;
 // setData([...dataUpdate]);
+
+//TODO
+//icons
+//update hook react query

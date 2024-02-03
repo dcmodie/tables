@@ -1,19 +1,19 @@
 import './App.css';
-import TableExample from './components/TableExample';
 import EditableCells from './components/EditableCells';
-import Button from '@mui/material/Button';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
 const queryClient = new QueryClient();
 
 function App() {
   //const [localData, setLocalData] = useState(empDataDb?.data);
+  const notify = () => toast('Wow so easy !');
   return (
     <>
       <QueryClientProvider client={queryClient}>
         <div>
-          <h1 className="text-3xl font-bold underline flex justify-end">
-            Hello world!
-          </h1>
+          <button onClick={notify}>Notify !</button>
+          <ToastContainer />
           <EditableCells />
         </div>
       </QueryClientProvider>
