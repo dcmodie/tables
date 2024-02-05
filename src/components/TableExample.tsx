@@ -23,12 +23,13 @@ const data = [
 ];
 
 const columns = [
-  { title: 'Name', field: 'name' },
-  { title: 'Last', field: 'surname' },
-  { title: 'Year', field: 'birthYear', type: 'numeric' },
+  { title: 'Name', field: 'name', type: 'string' as const },
+  { title: 'Last', field: 'surname', type: 'string' as const },
+  { title: 'Year', field: 'birthYear', type: 'numeric' as const },
   {
     title: 'City',
     field: 'birthCity',
+    type: 'string' as const,
   },
 ];
 

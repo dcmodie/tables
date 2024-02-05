@@ -21,12 +21,22 @@ function EditableCells() {
 
   const [localData, setLocalData] = useState(empDataDb?.data);
   const [disableSave, setDisableSave] = useState(true);
-  const notify = () => toast('Wow so easy!');
+  const notify = () =>
+    toast.info('🦄 Wow so easy!', {
+      position: 'top-center',
+      autoClose: 5000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: 'dark',
+    });
 
   const [columns, setColumns] = useState([
-    { title: 'Name', field: 'name' },
-    { title: 'Last', field: 'surname' },
-    { title: 'Year', field: 'birthYear', type: 'numeric' },
+    { title: 'Name', field: 'name', type: 'string' as const },
+    { title: 'Last', field: 'surname', type: 'string' as const },
+    { title: 'Year', field: 'birthYear', type: 'numeric' as const },
     {
       title: 'City',
       field: 'birthCity',
@@ -53,9 +63,9 @@ function EditableCells() {
             onRowAdd: (newData) =>
               new Promise((resolve, reject) => {
                 setTimeout(() => {
-                  setData([...data, newData]);
+                  //setData([...data, newData]);
 
-                  resolve();
+                  resolve('success');
                 }, 1000);
               }),
             onRowUpdate: (newData, oldData) => {
@@ -66,23 +76,23 @@ function EditableCells() {
                   }
 
                   const dataUpdate = [...localData];
-                  const index = oldData.tableData.id;
+                  const index = oldData?.tableData.id;
                   dataUpdate[index] = newData;
                   setLocalData([...dataUpdate]);
 
-                  resolve();
+                  resolve('success');
                 }, 1000);
               });
             },
             onRowDelete: (oldData) =>
               new Promise((resolve, reject) => {
                 setTimeout(() => {
-                  const dataDelete = [...data];
-                  const index = oldData.tableData.id;
-                  dataDelete.splice(index, 1);
-                  setData([...dataDelete]);
+                  // const dataDelete = [...data];
+                  // const index = oldData.tableData.id;
+                  // dataDelete.splice(index, 1);
+                  // setData([...dataDelete]);
 
-                  resolve();
+                  resolve('success');
                 }, 1000);
               }),
           }}
@@ -93,8 +103,18 @@ function EditableCells() {
           variant="contained"
           disabled={disableSave}
           onClick={() => {
-            toast('asfd');
+            toast.info('Saved', {
+              position: 'top-center',
+              autoClose: 5000,
+              hideProgressBar: false,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: 'dark',
+            });
             updateEmployees(localData);
+            setDisableSave(true);
           }}
         >
           Save

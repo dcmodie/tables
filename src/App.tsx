@@ -3,6 +3,8 @@ import EditableCells from './components/EditableCells';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { QueryClient, QueryClientProvider, useQuery } from 'react-query';
+import AddPlayer from './components/AddPlayer';
+import PlayerList from './components/PlayerList';
 const queryClient = new QueryClient();
 
 function App() {
@@ -14,7 +16,10 @@ function App() {
         <div>
           <button onClick={notify}>Notify !</button>
           <ToastContainer />
-          <EditableCells />
+          {
+            //<EditableCells />
+          }
+          <PlayerList />
         </div>
       </QueryClientProvider>
     </>
