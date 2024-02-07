@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import Player from '../components/Player';
 import AddPlayer from '../components/AddPlayer';
-import { Add } from '@material-ui/icons';
 
 export interface ListItem {
   name: '';
@@ -12,16 +11,17 @@ const PlayerList = () => {
   const [list, setList] = useState<ListItem[]>([]);
 
   const renderList = (): React.JSX.Element[] => {
-    //return [];
     return list.map((item) => {
       return <Player item={item} />;
     });
   };
   return (
-    <div className="flex space-x-14  ">
-      <div>
-        <div>mylist</div>
-        {renderList()}
+    <div className="grid grid-cols-1 gap-3">
+      <div className="h-64 overflow-auto border rounded border-solid">
+        <div className=" px-2 py-1">
+          <div className="text-center">Player List</div>
+          {renderList()}
+        </div>
       </div>
       <AddPlayer list={list} setList={setList} />
     </div>

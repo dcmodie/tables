@@ -13,8 +13,7 @@ function App() {
   return (
     <>
       <QueryClientProvider client={queryClient}>
-        <div>
-          <button onClick={notify}>Notify !</button>
+        <div className="flex items-center justify-center">
           <ToastContainer />
           {
             //<EditableCells />

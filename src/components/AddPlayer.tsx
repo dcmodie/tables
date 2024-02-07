@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { ListItem } from './PlayerList';
+import Button from '@mui/material/Button';
 
 interface iProps {
   list: ListItem[];
-  setList: () => void;
+  setList([]): void;
 }
-
-const AddPlayer: React.FunctionComponent = (props: iProps) => {
+const AddPlayer = (props: iProps): JSX.Element => {
   const { list, setList } = props;
   const [input, setInput] = useState({
     name: '',
@@ -19,7 +19,7 @@ const AddPlayer: React.FunctionComponent = (props: iProps) => {
     setInput({ ...input, [e.target.name]: e.target.value });
   };
 
-  const handleFormSubmit = (e): void => {
+  const handleFormSubmit = (e: React.FormEvent): void => {
     e.preventDefault();
     if (!input.name || !input.team || !input.url) {
       return;
@@ -29,9 +29,10 @@ const AddPlayer: React.FunctionComponent = (props: iProps) => {
   };
 
   return (
-    <div>
+    <div className="border rounded border-solid p-5">
       <form onSubmit={handleFormSubmit}>
         <input
+          className="border rounded border-solid px-2 py-1"
           type="string"
           name="name"
           placeholder="name"
@@ -40,6 +41,7 @@ const AddPlayer: React.FunctionComponent = (props: iProps) => {
         ></input>
         <div>
           <input
+            className="border rounded border-solid px-2 py-1"
             type="string"
             name="team"
             placeholder="team"
@@ -48,6 +50,7 @@ const AddPlayer: React.FunctionComponent = (props: iProps) => {
           ></input>
         </div>
         <input
+          className="border rounded border-solid px-2 py-1"
           type="string"
           name="url"
           placeholder="url"
@@ -56,6 +59,7 @@ const AddPlayer: React.FunctionComponent = (props: iProps) => {
         ></input>
         <div>
           <input
+            className="border rounded border-solid px-2 py-1"
             name="notes"
             type="string"
             placeholder="notes"
@@ -63,7 +67,11 @@ const AddPlayer: React.FunctionComponent = (props: iProps) => {
             onChange={onChange}
           ></input>
         </div>
-        <button type="submit">Add</button>
+        <div className="my-2">
+          <Button type="submit" variant="contained">
+            add
+          </Button>
+        </div>
       </form>
     </div>
   );
