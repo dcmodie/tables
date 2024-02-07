@@ -25,6 +25,7 @@ const AddPlayer = (props: iProps): JSX.Element => {
       return;
     }
     setList([...list, input]);
+    setInput({ name: '', team: '', url: '', notes: '' });
     console.log('add it ');
   };
 
